@@ -39,6 +39,10 @@ class PhoneInputView extends StatefulWidget {
   /// A callback that is being called when the user submits a phone number.
   final PhoneNumberSubmitCallback? onSubmit;
 
+  /// Whether to show the title or not.
+  /// Defaults to `true`.
+  final bool showTitle;
+
   /// Returned widget would be placed under the title.
   final WidgetBuilder? subtitleBuilder;
 
@@ -59,6 +63,7 @@ class PhoneInputView extends StatefulWidget {
     this.auth,
     this.action,
     this.onSubmit,
+    this.showTitle = true,
     this.subtitleBuilder,
     this.footerBuilder,
     this.multiFactorSession,
@@ -120,8 +125,8 @@ class _PhoneInputViewState extends State<PhoneInputView> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Title(text: l.phoneVerificationViewTitleText),
-            const SizedBox(height: 32),
+            if (widget.showTitle) Title(text: l.phoneVerificationViewTitleText),
+            if (widget.showTitle) const SizedBox(height: 32),
             if (widget.subtitleBuilder != null)
               widget.subtitleBuilder!(context),
             if (state is AwaitingPhoneNumber || state is SMSCodeRequested) ...[
